@@ -19,23 +19,25 @@ export class ReplyI8l {
 
   channelNotSet(): string {
     return this.isJp()
-      ? "???"
-      : "Channel not set. Use `/channel` in a channel to use it for Shiritori.";
+      ? "このチャンネルでしりとりくんを使ってね！ /channel で始まるよ！"
+      : "Use `/channel` to use this channel for しりとりくん.";
   }
 
   wrongChannel(channel: string): string {
     return this.isJp()
-      ? `<#${channel}>のみにて尻取り遊ぶ事が出来ます。`
+      ? `<#${channel}>のみにてしりとり遊ぶ事が出来ます。`
       : `You can only play shiritori in <#${channel}>.`;
   }
 
   notYourTurn(): string {
-    return this.isJp() ? "???" : "You must wait until the next round.";
+    return this.isJp()
+      ? "次の人の発言のあとに、つづけてね！"
+      : "You must wait until the next round.";
   }
 
   cooldown(n: number): string {
     return this.isJp()
-      ? "???"
+      ? `同じ言葉を使う場合は、${n}回待ってね。`
       : `That word is in cooldown for the next ${n} turns.`;
   }
 
@@ -53,17 +55,25 @@ export class ReplyI8l {
 
   shiritoriBad(word: string): string {
     return this.isJp()
-      ? `\`${word}\`は尻取りではありません!`
+      ? `\`${word}\`はしりとりではありません!`
       : `\`${word}\` is not a shiritori!`;
   }
 
-  shiritoriGet(): string {
-    return this.isJp() ? "尻取りゲット!" : "Shiritori get!";
+  shiritoriGet(shiri: string): string {
+    const isNWord = shiri === "ん" || shiri === "ン";
+    const jp = isNWord
+      ? "何でも宜しゅう御座います"
+      : `「${shiri}」から初まります`;
+    const en = isNWord ? "can use any letter" : `must use「${shiri}」`;
+
+    return this.isJp()
+      ? `しりとりゲット! 次の言葉は${jp}。`
+      : `Shiritori get! The next word ${en} as the first sound.`;
   }
 
   shiritoriNotFound(word: string): string {
     return this.isJp()
-      ? `\`${word}\`は見付かりませんでした!`
-      : `\`${word}\` could not be found!`;
+      ? `「${word}」は辞書に見付かりませんでした!`
+      : `「${word}」 could not be found in the dictionary!`;
   }
 }

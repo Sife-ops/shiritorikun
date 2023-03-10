@@ -55,7 +55,7 @@ export const shiritori: CommandHandler = async (ctx) => {
         .go(),
 
       ctx.followUp({
-        content: `⭕ ${ctx.replyI8l.shiritoriGet()} (${url})`,
+        content: `⭕ ${ctx.replyI8l.shiritoriGet(getShiri(reading))}\n(${url})`,
       }),
     ];
   } else {
