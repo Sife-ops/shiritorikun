@@ -1,0 +1,28 @@
+type Mutation {
+  mello: String!
+  search(input: SearchInput!): [User!]!
+}
+
+type Query {
+  hello: String!
+  viewer: User!
+}
+
+input SearchInput {
+  cursor: String
+  gender: String
+}
+
+type User {
+  avatar: String!
+  createdAt: String!
+  cursor: String
+  description: String
+  discordId: String
+  discriminator: String
+  displayName: String!
+  lastSeen: String!
+  userId: ID!
+  username: String
+  visible: Boolean!
+}
