@@ -5,7 +5,7 @@ import {
   use,
   Config,
   Function,
-  StaticSite,
+  // StaticSite,
 } from "sst/constructs";
 
 export function Database({ stack }: StackContext) {
@@ -52,11 +52,6 @@ export function Database({ stack }: StackContext) {
     },
   });
 
-  new Function(stack, "dataLambda", {
-    bind: [table],
-    handler: "packages/functions/src/data/main.handler",
-  });
-
   return {
     table,
   };
@@ -81,7 +76,7 @@ export function API({ stack }: StackContext) {
   const api = new Api(stack, "api", {
     defaults: {
       function: {
-        bind: [db.table, param.botPublicKey], // param.webTokenSecret
+        bind: [db.table, param.botPublicKey, param.botToken], // param.webTokenSecret
       },
     },
     // routes: {
