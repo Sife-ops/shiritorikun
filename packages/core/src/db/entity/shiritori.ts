@@ -25,7 +25,7 @@ export const ShiritoriEntity = new Entity(
         },
         sk: {
           field: "gsi1sk",
-          composite: ["score"],
+          composite: [],
         },
       },
 
@@ -38,6 +38,18 @@ export const ShiritoriEntity = new Entity(
         sk: {
           field: "gsi2sk",
           composite: [],
+        },
+      },
+
+      length_: {
+        index: "gsi3",
+        pk: {
+          field: "gsi3pk",
+          composite: [],
+        },
+        sk: {
+          field: "gsi3sk",
+          composite: ["length"],
         },
       },
     },
@@ -59,7 +71,7 @@ export const ShiritoriEntity = new Entity(
         required: true,
       },
 
-      score: {
+      length: {
         type: "number",
         required: true,
         default: 0,
@@ -80,7 +92,7 @@ export const ShiritoriEntity = new Entity(
         required: false,
       },
 
-      showRanking: {
+      leaderboard: {
         type: "boolean",
         required: true,
         default: false,
@@ -90,6 +102,18 @@ export const ShiritoriEntity = new Entity(
         type: ["en", "jp"] as const,
         required: true,
         default: "jp",
+      },
+
+      difficulty: {
+        type: ["normal", "hardcore"] as const,
+        required: true,
+        default: "normal",
+      },
+
+      cooldown: {
+        type: "number",
+        required: true,
+        default: 1000,
       },
     },
 

@@ -25,6 +25,30 @@ export const WordEntity = new Entity(
         },
         sk: {
           field: "gsi1sk",
+          composite: [],
+        },
+      },
+
+      shiritori_word: {
+        index: "gsi2",
+        pk: {
+          field: "gsi2pk",
+          composite: ["shiritoriId"],
+        },
+        sk: {
+          field: "gsi2sk",
+          composite: ["word", "reading", "createdAt"],
+        },
+      },
+
+      shiritori_recent: {
+        index: "gsi3",
+        pk: {
+          field: "gsi3pk",
+          composite: ["shiritoriId"],
+        },
+        sk: {
+          field: "gsi3sk",
           composite: ["createdAt"],
         },
       },
@@ -49,6 +73,11 @@ export const WordEntity = new Entity(
 
       reading: {
         type: "string",
+        required: true,
+      },
+
+      shiritoriIndex: {
+        type: "number",
         required: true,
       },
 

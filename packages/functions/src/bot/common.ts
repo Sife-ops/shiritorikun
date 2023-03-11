@@ -32,13 +32,13 @@ export const ephemeralResponse = (content: string) => {
   };
 };
 
-export const getRecentWords = async (
+export const getLastWord = async (
   shiritoriId: string
-): Promise<WordEntityType[]> => {
+): Promise<WordEntityType | undefined> => {
   return model.entities.WordEntity.query
-    .shiritori_({ shiritoriId })
-    .go({ order: "desc", limit: 100 })
-    .then((result) => result.data);
+    .shiritori_recent({ shiritoriId })
+    .go({ order: "desc", limit: 1 })
+    .then((result) => result.data[0]);
 };
 
 export const gooJisho = async (url: string) => {

@@ -1,9 +1,13 @@
 import { Member } from "./member";
 import { Options } from "./options";
 import { ReplyI8l } from "./reply-i8l";
-import { ShiritoriEntityType, WordEntityType } from "@shiritorikun/core/db/entity";
-import { fetchDiscord, getRecentWords } from "../common";
+import { fetchDiscord, getLastWord } from "../common";
 import { model as model_ } from "@shiritorikun/core/db";
+
+import {
+  ShiritoriEntityType,
+  WordEntityType,
+} from "@shiritorikun/core/db/entity";
 
 export class ConsumerCtx {
   model = model_;
@@ -55,8 +59,8 @@ export class ConsumerCtx {
       .go();
   }
 
-  async getRecentWords(): Promise<WordEntityType[]> {
-    return getRecentWords(this.shiritori.shiritoriId);
+  async getLastWord(): Promise<WordEntityType | undefined> {
+    return getLastWord(this.shiritori.shiritoriId);
   }
 
   followUp(body: Record<string, any>) {

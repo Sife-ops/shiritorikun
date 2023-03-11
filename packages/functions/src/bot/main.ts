@@ -5,7 +5,6 @@ import { ConsumerCtx } from "./ctx/consumer";
 import { Function } from "sst/node/function";
 import { HandlerCtx } from "./ctx/handler";
 import { Lambda } from "@aws-sdk/client-lambda";
-import { compareSync } from "bcryptjs";
 import { ephemeralResponse } from "./common";
 import { runner } from "./runner";
 
@@ -59,20 +58,6 @@ export const handler: Handler<
           return ephemeralResponse(
             ctx.replyI8l.wrongChannel(ctx.shiritori.channelId)
           );
-        }
-
-        const words = await ctx.getRecentWords();
-        if (words.length > 0) {
-          if (compareSync(ctx.member.getId(), words[0].memberHash)) {
-            return ephemeralResponse(ctx.replyI8l.notYourTurn());
-          }
-
-          const wordIndex = words.findIndex(
-            (w) => w.word === ctx.options.getOptionValue("word")
-          );
-          if (wordIndex > -1) {
-            return ephemeralResponse(ctx.replyI8l.cooldown(100 - wordIndex));
-          }
         }
       }
 

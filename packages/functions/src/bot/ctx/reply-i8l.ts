@@ -35,10 +35,16 @@ export class ReplyI8l {
       : "You must wait until the next round.";
   }
 
-  cooldown(n: number): string {
+  alreadyUsed(word: string): string {
     return this.isJp()
-      ? `同じ言葉を使う場合は、${n}回待ってね。`
-      : `That word is in cooldown for the next ${n} turns.`;
+      ? `「${word}」はもう使うことが出来ません。`
+      : `「${word}」 has already been used.`;
+  }
+
+  cooldown(word: string, n: number): string {
+    return this.isJp()
+      ? `「${word}」を使う場合は、${n}回待ってね。`
+      : `「${word}」 is in cooldown for the next ${n} turns.`;
   }
 
   language(language: "en" | "jp"): string {

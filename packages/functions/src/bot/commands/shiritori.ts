@@ -1,7 +1,21 @@
 import { CommandHandler } from "../runner";
+import { compareSync } from "bcryptjs";
 import { getShiri, gooJisho } from "../common";
 
 export const shiritori: CommandHandler = async (ctx) => {
+  const lastWord = await ctx.getLastWord();
+  if (lastWord) {
+    if (compareSync(ctx.member.getId(), lastWord.memberHash)) {
+      return {
+        mutations: [
+          ctx.followUp({
+            content: `❌ ${ctx.replyI8l.notYourTurn()}`,
+          }),
+        ],
+      };
+    }
+  }
+
   const word = ctx.options.getOptionValue("word") as string;
   const reading_ = ctx.options.getOptionValue("reading") as string | undefined;
 
@@ -13,58 +27,86 @@ export const shiritori: CommandHandler = async (ctx) => {
     reading = await gooJisho(url);
   }
 
-  let mutations = [];
-  if (ctx.shiritori.score > 0) {
-    mutations.push(
-      ctx.model.entities.ShiritoriEntity.update({
-        shiritoriId: ctx.shiritori.shiritoriId,
-      })
-        .subtract({ score: 1 })
-        .go()
-    );
-  }
-
-  condition: if (reading) {
-    const words = await ctx.getRecentWords();
-
-    if (words.length > 0) {
-      const shiri = getShiri(words[0].reading);
+  if (reading) {
+    if (lastWord) {
+      const shiri = getShiri(lastWord.reading);
       if (shiri !== "ん" && shiri !== "ン" && shiri !== reading[0]) {
-        mutations.push(
-          ctx.followUp({
-            content: `❌ ${ctx.replyI8l.shiritoriBad(word)}`,
-          })
-        );
+        return {
+          mutations: [
+            ctx.followUp({
+              content: `❌ ${ctx.replyI8l.shiritoriBad(word)}`,
+            }),
+          ],
+        };
+      }
 
-        break condition;
+      const oldWord = await ctx.model.entities.WordEntity.query
+        .shiritori_word({
+          shiritoriId: ctx.shiritori.shiritoriId,
+          word,
+          reading,
+        })
+        .go({ order: "desc" })
+        .then((result) => result.data[0]);
+
+      if (oldWord) {
+        if (ctx.shiritori.difficulty === "hardcore") {
+          return {
+            mutations: [
+              ctx.followUp({
+                content: `❌ ${ctx.replyI8l.alreadyUsed(word)}`, // todo: i8l
+              }),
+            ],
+          };
+        }
+
+        const since = ctx.shiritori.length - oldWord.shiritoriIndex;
+        if (since < ctx.shiritori.cooldown) {
+          return {
+            mutations: [
+              ctx.followUp({
+                content: `❌ ${ctx.replyI8l.cooldown(
+                  word,
+                  ctx.shiritori.cooldown - since
+                )}`,
+              }),
+            ],
+          };
+        }
       }
     }
 
-    mutations = [
-      ctx.model.entities.WordEntity.create({
-        shiritoriId: ctx.shiritori.shiritoriId,
-        memberHash: ctx.member.getIdHash(),
-        reading,
-        word,
-      }).go(),
+    return {
+      mutations: [
+        ctx.model.entities.WordEntity.create({
+          shiritoriId: ctx.shiritori.shiritoriId,
+          shiritoriIndex: ctx.shiritori.length,
+          memberHash: ctx.member.getIdHash(),
+          word,
+          reading,
+        }).go(),
 
-      ctx.model.entities.ShiritoriEntity.update({
-        shiritoriId: ctx.shiritori.shiritoriId,
-      })
-        .add({ score: 1 })
-        .go(),
+        ctx.model.entities.ShiritoriEntity.update({
+          shiritoriId: ctx.shiritori.shiritoriId,
+        })
+          // .add({ score: 1 })
+          .set({ length: ctx.shiritori.length + 1 })
+          .go(),
 
-      ctx.followUp({
-        content: `⭕ ${ctx.replyI8l.shiritoriGet(getShiri(reading))}\n(${url})`,
-      }),
-    ];
-  } else {
-    mutations.push(
-      ctx.followUp({
-        content: `❌ ${ctx.replyI8l.shiritoriNotFound(word)}`,
-      })
-    );
+        ctx.followUp({
+          content: `⭕ ${ctx.replyI8l.shiritoriGet(
+            getShiri(reading)
+          )}\n(${url})`,
+        }),
+      ],
+    };
   }
 
-  return { mutations };
+  return {
+    mutations: [
+      ctx.followUp({
+        content: `❌ ${ctx.replyI8l.shiritoriNotFound(word)}`,
+      }),
+    ],
+  };
 };
