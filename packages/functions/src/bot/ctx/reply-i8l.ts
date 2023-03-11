@@ -61,8 +61,8 @@ export class ReplyI8l {
 
   shiritoriBad(word: string): string {
     return this.isJp()
-      ? `\`${word}\`はしりとりではありません!`
-      : `\`${word}\` is not a shiritori!`;
+      ? `「${word}」はしりとりではありません!`
+      : `「${word}」 is not a shiritori!`;
   }
 
   shiritoriGet(shiri: string): string {

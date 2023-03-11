@@ -1,6 +1,6 @@
 import { CommandHandler } from "../runner";
 import { compareSync } from "bcryptjs";
-import { getShiri, gooJisho } from "../common";
+import { gooJisho, normalizeKana } from "../common";
 
 export const shiritori: CommandHandler = async (ctx) => {
   const lastWord = await ctx.getLastWord();
@@ -29,8 +29,12 @@ export const shiritori: CommandHandler = async (ctx) => {
 
   if (reading) {
     if (lastWord) {
-      const shiri = getShiri(lastWord.reading);
-      if (shiri !== "ん" && shiri !== "ン" && shiri !== reading[0]) {
+      const atama = normalizeKana(reading[0]);
+      const shiri = normalizeKana(
+        lastWord.reading[lastWord.reading.length - 1]
+      );
+
+      if (shiri !== "ん" && shiri !== atama) {
         return {
           mutations: [
             ctx.followUp({
@@ -95,7 +99,7 @@ export const shiritori: CommandHandler = async (ctx) => {
 
         ctx.followUp({
           content: `⭕ ${ctx.replyI8l.shiritoriGet(
-            getShiri(reading)
+            normalizeKana(reading[reading.length - 1])
           )}\n(${url})`,
         }),
       ],

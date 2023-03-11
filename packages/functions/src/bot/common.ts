@@ -48,25 +48,179 @@ export const gooJisho = async (url: string) => {
     .then((e) => e(".yomi").text());
 };
 
-export const getShiri = (s: string) => {
-  const shiri = s[s.length - 1];
-  switch (shiri) {
-    case "ゃ":
+export const normalizeKana = (kana: string) => {
+  switch (kana) {
+    case "ア":
+      return "あ";
+    case "イ":
+      return "い";
+    case "ウ":
+      return "う";
+    case "エ":
+      return "え";
+    case "オ":
+      return "お";
+    case "カ":
+      return "か";
+    case "キ":
+      return "き";
+    case "ク":
+      return "く";
+    case "ケ":
+      return "け";
+    case "コ":
+      return "こ";
+    case "サ":
+      return "さ";
+    case "シ":
+      return "し";
+    case "ス":
+      return "す";
+    case "セ":
+      return "せ";
+    case "ソ":
+      return "そ";
+    case "タ":
+      return "た";
+    case "チ":
+      return "ち";
+    case "ツ":
+      return "つ";
+    case "テ":
+      return "て";
+    case "ト":
+      return "と";
+    case "ナ":
+      return "な";
+    case "ニ":
+      return "に";
+    case "ヌ":
+      return "ぬ";
+    case "ネ":
+      return "ね";
+    case "ノ":
+      return "の";
+    case "ハ":
+      return "は";
+    case "ヒ":
+      return "ひ";
+    case "フ":
+      return "ふ";
+    case "ヘ":
+      return "へ";
+    case "ホ":
+      return "ほ";
+    case "マ":
+      return "ま";
+    case "ミ":
+      return "み";
+    case "ム":
+      return "む";
+    case "メ":
+      return "め";
+    case "モ":
+      return "も";
+    case "ヤ":
       return "や";
-    case "ャ":
-      return "ヤ";
-    case "ゅ":
+    case "ユ":
       return "ゆ";
-    case "ュ":
-      return "ユ";
-    case "ょ":
+    case "ヨ":
       return "よ";
+    case "ラ":
+      return "ら";
+    case "リ":
+      return "り";
+    case "ル":
+      return "る";
+    case "レ":
+      return "れ";
+    case "ロ":
+      return "ろ";
+    case "ワ":
+      return "わ";
+    case "ヲ":
+      return "を";
+    case "ン":
+      return "ん";
+
+    case "ガ":
+      return "が";
+    case "ギ":
+      return "ぎ";
+    case "グ":
+      return "ぐ";
+    case "ゲ":
+      return "げ";
+    case "ゴ":
+      return "ご";
+    case "ザ":
+      return "ざ";
+    case "ジ":
+      return "じ";
+    case "ズ":
+      return "ず";
+    case "ゼ":
+      return "ぜ";
+    case "ゾ":
+      return "ぞ";
+    case "ダ":
+      return "だ";
+    case "ヂ":
+      return "ぢ";
+    case "ヅ":
+      return "づ";
+    case "デ":
+      return "で";
+    case "ド":
+      return "ど";
+    case "バ":
+      return "ば";
+    case "ビ":
+      return "び";
+    case "ブ":
+      return "ぶ";
+    case "ベ":
+      return "べ";
+    case "ボ":
+      return "ぼ";
+    case "パ":
+      return "ぱ";
+    case "ピ":
+      return "ぴ";
+    case "プ":
+      return "ぷ";
+    case "ペ":
+      return "ぺ";
+    case "ポ":
+      return "ぽ";
+
+    case "ぁ":
+    case "ァ":
+      return "あ";
+    case "ぃ":
+    case "ィ":
+      return "い";
+    case "ぅ":
+    case "ゥ":
+      return "う";
+    case "ぇ":
+    case "ェ":
+      return "え";
+    case "ぉ":
+    case "ォ":
+      return "お";
+
+    case "ゃ":
+    case "ャ":
+      return "や";
+    case "ゅ":
+    case "ュ":
+      return "ゆ";
+    case "ょ":
     case "ョ":
-      return "ヨ";
-    // case "ん":
-    // case "ン":
-    //   return s[s.length - 2];
+      return "よ";
+
     default:
-      return shiri;
+      return kana;
   }
 };
