@@ -1,64 +1,47 @@
 export type Scalars = {
     String: string,
+    Int: number,
     ID: string,
     Boolean: boolean,
 }
 
 export interface Mutation {
-    mello: Scalars['String']
-    search: User[]
+    hello: Scalars['String']
     __typename: 'Mutation'
 }
 
 export interface Query {
-    hello: Scalars['String']
-    viewer: User
+    ranking: Shiritori[]
     __typename: 'Query'
 }
 
-export interface User {
-    avatar: Scalars['String']
-    createdAt: Scalars['String']
-    cursor?: Scalars['String']
-    description?: Scalars['String']
-    discordId?: Scalars['String']
-    discriminator?: Scalars['String']
-    displayName: Scalars['String']
-    lastSeen: Scalars['String']
-    userId: Scalars['ID']
-    username?: Scalars['String']
-    visible: Scalars['Boolean']
-    __typename: 'User'
+export interface Shiritori {
+    guildIcon: Scalars['String']
+    guildId: Scalars['String']
+    guildName: Scalars['String']
+    length: Scalars['Int']
+    shiritoriId: Scalars['ID']
+    __typename: 'Shiritori'
 }
 
 export interface MutationGenqlSelection{
-    mello?: boolean | number
-    search?: (UserGenqlSelection & { __args: {input: SearchInput} })
+    hello?: boolean | number
     __typename?: boolean | number
     __scalar?: boolean | number
 }
 
 export interface QueryGenqlSelection{
-    hello?: boolean | number
-    viewer?: UserGenqlSelection
+    ranking?: ShiritoriGenqlSelection
     __typename?: boolean | number
     __scalar?: boolean | number
 }
 
-export interface SearchInput {cursor?: (Scalars['String'] | null),gender?: (Scalars['String'] | null)}
-
-export interface UserGenqlSelection{
-    avatar?: boolean | number
-    createdAt?: boolean | number
-    cursor?: boolean | number
-    description?: boolean | number
-    discordId?: boolean | number
-    discriminator?: boolean | number
-    displayName?: boolean | number
-    lastSeen?: boolean | number
-    userId?: boolean | number
-    username?: boolean | number
-    visible?: boolean | number
+export interface ShiritoriGenqlSelection{
+    guildIcon?: boolean | number
+    guildId?: boolean | number
+    guildName?: boolean | number
+    length?: boolean | number
+    shiritoriId?: boolean | number
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -80,9 +63,9 @@ export interface UserGenqlSelection{
     
 
 
-    const User_possibleTypes: string[] = ['User']
-    export const isUser = (obj?: { __typename?: any } | null): obj is User => {
-      if (!obj?.__typename) throw new Error('__typename is missing in "isUser"')
-      return User_possibleTypes.includes(obj.__typename)
+    const Shiritori_possibleTypes: string[] = ['Shiritori']
+    export const isShiritori = (obj?: { __typename?: any } | null): obj is Shiritori => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isShiritori"')
+      return Shiritori_possibleTypes.includes(obj.__typename)
     }
     

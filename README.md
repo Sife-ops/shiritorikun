@@ -42,7 +42,7 @@ It's [shiritori](https://ja.wikipedia.org/wiki/%E3%81%97%E3%82%8A%E3%81%A8%E3%82
 
 ## How it works
 
-しりとりくん implements a minimal webscraper for [goo辞書](https://dictionary.goo.ne.jp/) to look up words submitted by users. Only the hash of a user's Discord ID is stored in our database for the purpose of game mechanics.
+しりとりくん implements a minimal webscraper for [goo辞書](https://dictionary.goo.ne.jp/) to look up words submitted by users. It doesn't collect or save any user info! Only the [hash](https://en.wikipedia.org/wiki/Hash_function) of a user's Discord ID is stored in the database for the purpose of game mechanics.
 
 ## Planned features
 

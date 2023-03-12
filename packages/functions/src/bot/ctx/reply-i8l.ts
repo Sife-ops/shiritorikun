@@ -19,7 +19,7 @@ export class ReplyI8l {
 
   channelNotSet(): string {
     return this.isJp()
-      ? "このチャンネルでしりとりくんを使ってね！ /channel で始まるよ！"
+      ? "このチャンネルでしりとりくんを使ってね！ `/channel` で始まるよ！"
       : "Use `/channel` to use this channel for しりとりくん.";
   }
 
@@ -41,10 +41,10 @@ export class ReplyI8l {
       : `「${word}」 has already been used.`;
   }
 
-  cooldown(word: string, n: number): string {
+  cooldown(word: string, reading: string, n: number): string {
     return this.isJp()
-      ? `「${word}」を使う場合は、${n}回待ってね。`
-      : `「${word}」 is in cooldown for the next ${n} turns.`;
+      ? `「${word}/${reading}」を使う場合は、${n}回待ってね。`
+      : `「${word}/${reading}」 is in cooldown for the next ${n} turns.`;
   }
 
   language(language: "en" | "jp"): string {
@@ -81,5 +81,29 @@ export class ReplyI8l {
     return this.isJp()
       ? `「${word}」は辞書に見付かりませんでした!`
       : `「${word}」 could not be found in the dictionary!`;
+  }
+
+  infoTitle() {
+    return this.isJp() ? "詳細情報" : "Info";
+  }
+
+  infoWord() {
+    return this.isJp() ? "最新のしりとり" : "Current word";
+  }
+
+  infoLength() {
+    return this.isJp() ? "しりとりの長さ" : "Shiritori length";
+  }
+
+  infoLeaderboard() {
+    return this.isJp() ? "ランキング" : "Leaderboard";
+  }
+
+  infoLeaderboardValue(b: boolean) {
+    return this.isJp() ? (b ? "参加" : "不参加") : b ? "Visible" : "Hidden";
+  }
+
+  infoLink() {
+    return this.isJp() ? "ランキングURL" : "Leaderboard URL";
   }
 }

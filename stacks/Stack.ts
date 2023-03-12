@@ -1,11 +1,11 @@
 import {
-  StackContext,
   Api,
-  Table,
-  use,
   Config,
   Function,
-  // StaticSite,
+  StackContext,
+  StaticSite,
+  Table,
+  use,
 } from "sst/constructs";
 
 export function Database({ stack }: StackContext) {
@@ -79,21 +79,21 @@ export function API({ stack }: StackContext) {
         bind: [db.table, param.botPublicKey, param.botToken], // param.webTokenSecret
       },
     },
-    // routes: {
-    //   "POST /graphql": {
-    //     type: "graphql",
-    //     function: {
-    //       handler: "packages/functions/src/graphql/graphql.handler",
-    //     },
-    //     pothos: {
-    //       schema: "packages/functions/src/graphql/schema.ts",
-    //       output: "packages/graphql/schema.graphql",
-    //       commands: [
-    //         "npx genql --output ./packages/graphql/genql --schema ./packages/graphql/schema.graphql --esm",
-    //       ],
-    //     },
-    //   },
-    // },
+    routes: {
+      "POST /graphql": {
+        type: "graphql",
+        function: {
+          handler: "packages/functions/src/graphql/graphql.handler",
+        },
+        pothos: {
+          schema: "packages/functions/src/graphql/schema.ts",
+          output: "packages/graphql/schema.graphql",
+          commands: [
+            "npx genql --output ./packages/graphql/genql --schema ./packages/graphql/schema.graphql --esm",
+          ],
+        },
+      },
+    },
   });
 
   stack.addOutputs({
@@ -110,17 +110,17 @@ export function Web({ stack }: StackContext) {
   const db = use(Database);
   const param = use(Parameters);
 
-  // const site = new StaticSite(stack, "site", {
-  //   path: "packages/web",
-  //   buildCommand: "npm run build",
-  //   buildOutput: "dist",
-  //   environment: {
-  //     VITE_API_URL: api.api.url,
-  //   },
-  // });
+  const site = new StaticSite(stack, "site", {
+    path: "packages/web",
+    buildCommand: "npm run build",
+    buildOutput: "dist",
+    environment: {
+      VITE_API_URL: api.api.url,
+    },
+  });
 
   const botLambda = new Function(stack, "botLambda", {
-    bind: [db.table, param.botToken], // site, param.webTokenSecret
+    bind: [db.table, param.botToken, site], // param.webTokenSecret
     handler: "packages/functions/src/bot/main.consumer",
   });
 
@@ -133,7 +133,7 @@ export function Web({ stack }: StackContext) {
     },
   });
 
-  // stack.addOutputs({
-  //   SITE: site.url || "",
-  // });
+  stack.addOutputs({
+    SITE: site.url || "",
+  });
 }

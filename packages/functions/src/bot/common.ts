@@ -22,6 +22,12 @@ export const fetchDiscord = async (
   });
 };
 
+export const fetchGuild = async (guildId: string): Promise<any> => {
+  return fetchDiscord(`/guilds/${guildId}`, {
+    method: "GET",
+  }).then((result) => result.json() as any);
+};
+
 export const ephemeralResponse = (content: string) => {
   return {
     type: 4,

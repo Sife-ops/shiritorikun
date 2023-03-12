@@ -69,7 +69,7 @@ export const handler: Handler<
       });
 
       // todo: ranking
-      const ephemeral = ["channel", "language", "foo"];
+      const ephemeral = ["channel", "language", "info", "leaderboard", "foo"];
       if (ephemeral.includes(ctx.options.getCommandName(0))) {
         return {
           type: 5,

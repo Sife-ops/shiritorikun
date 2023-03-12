@@ -58,7 +58,7 @@ export const shiritori: CommandHandler = async (ctx) => {
           return {
             mutations: [
               ctx.followUp({
-                content: `❌ ${ctx.replyI8l.alreadyUsed(word)}`, // todo: i8l
+                content: `❌ ${ctx.replyI8l.alreadyUsed(word)}`,
               }),
             ],
           };
@@ -71,6 +71,7 @@ export const shiritori: CommandHandler = async (ctx) => {
               ctx.followUp({
                 content: `❌ ${ctx.replyI8l.cooldown(
                   word,
+                  reading,
                   ctx.shiritori.cooldown - since
                 )}`,
               }),

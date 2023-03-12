@@ -71,6 +71,11 @@ export const ShiritoriEntity = new Entity(
         required: true,
       },
 
+      guildIcon: {
+        type: "string",
+        required: true,
+      },
+
       length: {
         type: "number",
         required: true,

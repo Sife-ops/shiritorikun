@@ -1,7 +1,7 @@
 import { Member } from "./member";
 import { Options } from "./options";
 import { ReplyI8l } from "./reply-i8l";
-import { fetchDiscord, getLastWord } from "../common";
+import { fetchDiscord, fetchGuild, getLastWord } from "../common";
 import { model as model_ } from "@shiritorikun/core/db";
 
 import {
@@ -37,15 +37,12 @@ export class HandlerCtx {
       .then((result) => result.data[0])
       .then(async (shiritori) => {
         if (!shiritori) {
-          // todo: update guild name
-          const guild = await fetchDiscord(
-            `/guilds/${interactionBody.guild_id}`,
-            { method: "GET" }
-          ).then((result) => result.json() as any);
+          const guild = await fetchGuild(interactionBody.guild_id);
 
           return model_.entities.ShiritoriEntity.create({
             guildId: interactionBody.guild_id,
             guildName: guild.name,
+            guildIcon: guild.icon,
           })
             .go()
             .then((result) => result.data);
