@@ -1,6 +1,6 @@
 import { Member } from "./member";
 import { Options } from "./options";
-import { ReplyI8l } from "./reply-i8l";
+import { I8l } from "./i8l";
 import { fetchDiscord, getLastWord } from "../common";
 import { model as model_ } from "@shiritorikun/core/db";
 
@@ -15,7 +15,7 @@ export class ConsumerCtx {
   options;
   member;
   shiritori;
-  replyI8l;
+  i8l;
 
   private constructor(c: {
     interactionBody: any;
@@ -25,7 +25,7 @@ export class ConsumerCtx {
     this.options = new Options({ interactionBody: c.interactionBody });
     this.member = new Member({ interactionBody: c.interactionBody });
     this.shiritori = c.shiritori;
-    this.replyI8l = new ReplyI8l({ shiritori: c.shiritori });
+    this.i8l = new I8l({ shiritori: c.shiritori });
   }
 
   static async init({ interactionBody }: { interactionBody: any }) {

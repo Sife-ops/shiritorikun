@@ -38,7 +38,7 @@ It's [shiritori](https://ja.wikipedia.org/wiki/%E3%81%97%E3%82%8A%E3%81%A8%E3%82
 
 ## How to use
 
-[Invite](https://discord.com/api/oauth2/authorize?client_id=1083706973813477448&permissions=2147502080&scope=bot%20applications.commands) しりとりくん to your server (link). Use the `/channel` command in a channel that you wish to use for playing. Use the `/shiritori` command to add words. Use `/language` to change the language (default is Japanese because shiritori is a Japanese game and playing Japanese games in English is cringe).
+[Invite](https://discord.com/api/oauth2/authorize?client_id=1083706973813477448&permissions=2147502080&scope=bot%20applications.commands) しりとりくん to your server. Use the `/channel` command in a channel that you wish to use for playing. Use the `/shiritori` command to add words. Use `/language` to change the language (default is Japanese because shiritori is a Japanese game and playing Japanese games in English is cringe).
 
 ## How it works
 

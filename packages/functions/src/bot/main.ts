@@ -46,17 +46,17 @@ export const handler: Handler<
       if (!ctx.isMemberAuthorized()) {
         const name = ctx.options.getCommandName(0);
         const id = ctx.options.getCommandId(0);
-        return ephemeralResponse(ctx.replyI8l.unauthorized(name, id));
+        return ephemeralResponse(ctx.i8l.unauthorized(name, id));
       }
 
       if (ctx.options.getCommandName(0) === "shiritori") {
         if (!ctx.shiritori.channelId) {
-          return ephemeralResponse(ctx.replyI8l.channelNotSet());
+          return ephemeralResponse(ctx.i8l.channelNotSet());
         }
 
         if (interactionBody.channel_id !== ctx.shiritori.channelId) {
           return ephemeralResponse(
-            ctx.replyI8l.wrongChannel(ctx.shiritori.channelId)
+            ctx.i8l.wrongChannel(ctx.shiritori.channelId)
           );
         }
       }

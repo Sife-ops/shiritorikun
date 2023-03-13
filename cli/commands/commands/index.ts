@@ -3,4 +3,5 @@
 // export * from "./channel";
 // export * from "./shiritori";
 // export * from "./language";
-export * from "./info";
+// export * from "./info";
+export * from "./leaderboard";

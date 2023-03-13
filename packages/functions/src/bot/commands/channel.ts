@@ -6,7 +6,7 @@ export const channel: CommandHandler = async (ctx) => {
       ctx.setShiritoriChannel(),
 
       ctx.followUp({
-        content: ctx.replyI8l.channel(ctx.getChannelId()),
+        content: ctx.i8l.channel(ctx.getChannelId()),
       }),
     ],
   };

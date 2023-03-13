@@ -9,7 +9,7 @@ export const shiritori: CommandHandler = async (ctx) => {
       return {
         mutations: [
           ctx.followUp({
-            content: `❌ ${ctx.replyI8l.notYourTurn()}`,
+            content: `❌ ${ctx.i8l.notYourTurn()}`,
           }),
         ],
       };
@@ -38,7 +38,7 @@ export const shiritori: CommandHandler = async (ctx) => {
         return {
           mutations: [
             ctx.followUp({
-              content: `❌ ${ctx.replyI8l.shiritoriBad(word)}`,
+              content: `❌ ${ctx.i8l.shiritoriBad(word)}`,
             }),
           ],
         };
@@ -58,7 +58,7 @@ export const shiritori: CommandHandler = async (ctx) => {
           return {
             mutations: [
               ctx.followUp({
-                content: `❌ ${ctx.replyI8l.alreadyUsed(word)}`,
+                content: `❌ ${ctx.i8l.alreadyUsed(word)}`,
               }),
             ],
           };
@@ -69,7 +69,7 @@ export const shiritori: CommandHandler = async (ctx) => {
           return {
             mutations: [
               ctx.followUp({
-                content: `❌ ${ctx.replyI8l.cooldown(
+                content: `❌ ${ctx.i8l.cooldown(
                   word,
                   reading,
                   ctx.shiritori.cooldown - since
@@ -99,7 +99,7 @@ export const shiritori: CommandHandler = async (ctx) => {
           .go(),
 
         ctx.followUp({
-          content: `⭕ ${ctx.replyI8l.shiritoriGet(
+          content: `⭕ ${ctx.i8l.shiritoriGet(
             normalizeKana(reading[reading.length - 1])
           )}\n(${url})`,
         }),
@@ -110,7 +110,7 @@ export const shiritori: CommandHandler = async (ctx) => {
   return {
     mutations: [
       ctx.followUp({
-        content: `❌ ${ctx.replyI8l.shiritoriNotFound(word)}`,
+        content: `❌ ${ctx.i8l.shiritoriNotFound(word)}`,
       }),
     ],
   };

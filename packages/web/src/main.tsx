@@ -17,7 +17,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   // </React.StrictMode>
 );
 
-const Av: React.FC<{ shiritori: Shiritori }> = (p) => {
+const Icon: React.FC<{ shiritori: Shiritori }> = (p) => {
   const [image, setImage] = useState<string>();
 
   useEffect(() => {
@@ -28,14 +28,21 @@ const Av: React.FC<{ shiritori: Shiritori }> = (p) => {
       .then((img) => setImage(img));
   }, []);
 
+  const size = "72px";
+  const styleSize = {
+    maxWidth: size,
+    minWidth: size,
+    maxHeight: size,
+    minHeight: size,
+  };
+
   return (
-    <div>
+    <div style={styleSize}>
       {image && (
         <img
           style={{
             borderRadius: "50%",
-            maxWidth: "72px",
-            minWidth: "72px",
+            ...styleSize,
           }}
           src={image}
           alt="guild icon"
@@ -69,18 +76,68 @@ function App() {
 
   return (
     <div>
-      <div>しりとりくんランキング</div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <img
+            style={{
+              maxWidth: "72px",
+            }}
+            src="/stk.svg"
+          />
+          <h1
+            style={{
+              marginTop: "0",
+            }}
+          >
+            しりとりくんランキング
+          </h1>
+        </div>
+      </div>
       <div>
-        {ranking &&
-          ranking.map((shiritori) => {
-            return (
-              <div key={shiritori.shiritoriId}>
-                <Av shiritori={shiritori} />
-                <div>ギルド名： {shiritori.guildName}</div>
-                <div>しりとりの長さ： {shiritori.length}</div>
-              </div>
-            );
-          })}
+        {ranking && (
+          <table
+            style={{
+              width: "100%",
+            }}
+          >
+            <tr>
+              <th
+                style={{
+                  width: "10%",
+                }}
+              ></th>
+              <th>ギルド名</th>
+              <th>しりとりの長さ</th>
+            </tr>
+            {ranking.map((shiritori, i) => (
+              <tr key={shiritori.shiritoriId}>
+                <td
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-evenly",
+                  }}
+                >
+                  #{i + 1}
+                  <Icon shiritori={shiritori} />
+                </td>
+                <td>{shiritori.guildName}</td>
+                <td>{shiritori.length}</td>
+              </tr>
+            ))}
+          </table>
+        )}
       </div>
     </div>
   );

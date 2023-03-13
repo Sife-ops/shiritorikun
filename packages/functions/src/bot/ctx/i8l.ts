@@ -1,6 +1,6 @@
 import { ShiritoriEntityType } from "@shiritorikun/core/db/entity";
 
-export class ReplyI8l {
+export class I8l {
   shiritori;
 
   constructor(c: { shiritori: ShiritoriEntityType }) {
@@ -51,6 +51,12 @@ export class ReplyI8l {
     return language === "jp"
       ? "言語を日本語に設定しました。"
       : "Language has been set to English.";
+  }
+
+  leaderboardStatus(status: string): string {
+    return this.isJp()
+      ? `ランキング参加状況を\`${status}\`に設定しました。`
+      : `Leaderboard opt-in status set to \`${status}\`.`;
   }
 
   channel(channelId: string): string {

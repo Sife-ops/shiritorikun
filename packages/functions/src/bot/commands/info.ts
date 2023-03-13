@@ -28,27 +28,27 @@ export const info: CommandHandler = async (ctx) => {
         // content: "Info",
         embeds: [
           {
-            title: ctx.replyI8l.infoTitle(),
+            title: ctx.i8l.infoTitle(),
             // description: "Shiritori Information",
             fields: [
               {
-                name: ctx.replyI8l.infoWord(),
+                name: ctx.i8l.infoWord(),
                 value: `${lastWord?.word || ""}/${lastWord?.reading || ""}`,
               },
               {
-                name: ctx.replyI8l.infoLength(),
+                name: ctx.i8l.infoLength(),
                 value: ctx.shiritori.length,
               },
               {
-                name: ctx.replyI8l.infoLeaderboard(),
-                value: ctx.replyI8l.infoLeaderboardValue(
+                name: ctx.i8l.infoLeaderboard(),
+                value: ctx.i8l.infoLeaderboardValue(
                   ctx.shiritori.leaderboard
                 ),
               },
             ],
           },
           {
-            title: ctx.replyI8l.infoLink(),
+            title: ctx.i8l.infoLink(),
             url:
               Config.STAGE === "prod"
                 ? `${StaticSite.site.url}`
