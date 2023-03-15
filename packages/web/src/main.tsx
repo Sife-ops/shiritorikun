@@ -18,14 +18,16 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
 );
 
 const Icon: React.FC<{ shiritori: Shiritori }> = (p) => {
+  const { guildIcon, guildId } = p.shiritori;
   const [image, setImage] = useState<string>();
 
   useEffect(() => {
-    const { guildIcon, guildId } = p.shiritori;
-    fetch(`https://cdn.discordapp.com/icons/${guildId}/${guildIcon}.png`)
-      .then((res) => res.blob())
-      .then((blob) => URL.createObjectURL(blob))
-      .then((img) => setImage(img));
+    if (guildIcon) {
+      fetch(`https://cdn.discordapp.com/icons/${guildId}/${guildIcon}.png`)
+        .then((res) => res.blob())
+        .then((blob) => URL.createObjectURL(blob))
+        .then((img) => setImage(img));
+    }
   }, []);
 
   const size = "72px";
@@ -36,20 +38,24 @@ const Icon: React.FC<{ shiritori: Shiritori }> = (p) => {
     minHeight: size,
   };
 
-  return (
-    <div style={styleSize}>
-      {image && (
-        <img
-          style={{
-            borderRadius: "50%",
-            ...styleSize,
-          }}
-          src={image}
-          alt="guild icon"
-        />
-      )}
-    </div>
+  const imgFn = (s: string) => (
+    <img
+      style={{
+        borderRadius: "50%",
+        ...styleSize,
+      }}
+      src={s}
+      alt="guild icon"
+    />
   );
+
+  const imgCnd = () => {
+    if (!guildIcon) return imgFn("/stk.svg");
+    if (image) return imgFn(image);
+    return null;
+  };
+
+  return <div style={styleSize}>{imgCnd()}</div>;
 };
 
 function App() {
@@ -70,7 +76,9 @@ function App() {
   useEffect(() => {
     const { fetching, data } = rankingQ;
     if (!fetching && data) {
-      setRanking(data.ranking as Shiritori[]);
+      setRanking(
+        data.ranking.sort((a, b) => b.length - a.length) as Shiritori[]
+      );
     }
   }, [rankingQ]);
 

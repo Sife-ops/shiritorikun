@@ -8,7 +8,7 @@ ShiritoriType.implement({
     shiritoriId: t.exposeID("shiritoriId"),
     guildId: t.exposeString("guildId"),
     guildName: t.exposeString("guildName"),
-    guildIcon: t.exposeString("guildIcon"),
+    guildIcon: t.exposeString("guildIcon", { nullable: true }),
     length: t.exposeInt("length"),
   }),
 });

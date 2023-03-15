@@ -16,7 +16,7 @@ export interface Query {
 }
 
 export interface Shiritori {
-    guildIcon: Scalars['String']
+    guildIcon?: Scalars['String']
     guildId: Scalars['String']
     guildName: Scalars['String']
     length: Scalars['Int']

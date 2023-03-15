@@ -37,12 +37,12 @@ export class HandlerCtx {
       .then((result) => result.data[0])
       .then(async (shiritori) => {
         if (!shiritori) {
-          const guild = await fetchGuild(interactionBody.guild_id);
+          const { name, icon } = await fetchGuild(interactionBody.guild_id);
 
           return model_.entities.ShiritoriEntity.create({
             guildId: interactionBody.guild_id,
-            guildName: guild.name,
-            guildIcon: guild.icon,
+            guildIcon: typeof icon === "string" ? icon : undefined,
+            guildName: name,
           })
             .go()
             .then((result) => result.data);

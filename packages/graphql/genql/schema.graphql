@@ -7,7 +7,7 @@ type Query {
 }
 
 type Shiritori {
-  guildIcon: String!
+  guildIcon: String
   guildId: String!
   guildName: String!
   length: Int!
